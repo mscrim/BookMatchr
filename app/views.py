@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from app import app
-import pymysql as mdb
+import MySQLdb as mdb
 import appfunctions as appfunc
 
 #db = mdb.connect(user="root", host="localhost", db="world_innodb", charset='utf8')
