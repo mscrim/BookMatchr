@@ -1,0 +1,21 @@
+body {
+  background: url('../static/images/books3.jpg') no-repeat center center fixed;
+  padding-top: 50px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+.well {
+   background-color: rgba(245, 245, 245, 0.8);
+}
+span.stars, span.stars span {
+    display: block;
+    background: url(../static/images/stars.png) 0 -16px repeat-x;
+    width: 80px;
+    height: 16px;
+}
+
+span.stars span {
+    background-position: 0 0;
+}
