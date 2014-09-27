@@ -1,5 +1,5 @@
 import MySQLdb as mdb
-import pandas as pd
+#import pandas as pd
 import numpy as np
 import nltk
 from collections import Counter
@@ -9,9 +9,9 @@ import sys
 from sets import Set
 import time as tme
 import datetime as dt
-import matplotlib.pyplot as plt
-from matplotlib import rcParams
-rcParams.update({'figure.autolayout': True})
+#import matplotlib.pyplot as plt
+#from matplotlib import rcParams
+#rcParams.update({'figure.autolayout': True})
 
 
 def collect(l, index):
@@ -309,9 +309,9 @@ def wordfreq2(keyword):
     
     # Make plot
     dtime = [dt.datetime.fromtimestamp(t).strftime("%Y/%m") for t in time]
-    df = pd.DataFrame(nrev_wk_time.T, index=dtime, columns=[keyword])
+    #df = pd.DataFrame(nrev_wk_time.T, index=dtime, columns=[keyword])
     
-    print df
+    #print df
     
     #fig1 = plt.figure()
     #with plt.style.context('fivethirtyeight'):
