@@ -44,7 +44,7 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="#about">About</a></li>
+            <li><a href="/slides">Slides</a></li>
             <li><a href="/author.html">Author</a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -302,6 +302,7 @@
 			function success(text) {
 				var text_space = document.getElementById('sentence_popup');
 				text_space.innerHTML = text[0]; 
+				<div id="chart_div" style="width: 450px; height: 300px;"></div>
 				var text_heading = document.getElementById('popup_header');
 				text_heading.innerHTML = 'Benefits of including ' + '"<b>' + wname + '"</b> with '+ '"<b>' + kwname + '"</b>';
 			};  

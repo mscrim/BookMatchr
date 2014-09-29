@@ -32,7 +32,7 @@ def author():
     
 @app.route('/slides.html')
 def slides():
-    return render_template('slides.html')
+    return render_template('slidestack.html')
 
 @app.route("/sentences", methods=['GET'])
 def get_sentences():
