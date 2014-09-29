@@ -160,6 +160,8 @@ def wordfreq3(keyword):
     nrev_wk_time = np.zeros(nbins)
     #nrev_wk_time[:,0] = time
     
+    word_occ = {}
+    
     time1 = tm.time()
     for row in rows:
         reviewnouns = row[1]
@@ -293,7 +295,7 @@ def wordfreq3(keyword):
         # word, posratio, negratio, posratio-negratio, scorediffpos, n_in_posreviews, n_in_negreviews
         # word, tfidf, scorediffpos, n_in_posreviews, n_in_negreviews
         if word[0] != keyword and word[0] != keyword+'s' and word[0] != keyword+'es':
-            top5_pos_wds.append((word[0],word[1],0.,0.,0.))
+            top5_pos_wds.append((word[0],word[1],0.5,5,1))
             n += 1
             if n == 10: break
     n = 0
