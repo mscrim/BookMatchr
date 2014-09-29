@@ -235,7 +235,7 @@ def wordfreq3(keyword):
     tfidf_neg = [(w, float(fdistneg[w])/float(fdistneg.N())*nouns_idf[w]) for w in fdistneg.keys() if len(w) > 1 and fdistneg[w] > 1]
     tfidf_all = [(w, float(fdist[w])/float(fdist.N())*nouns_idf[w]) for w in fdist.keys() if len(w) > 1 and fdist[w] > 1]
     
-    print tfidf_pos
+    #print tfidf_pos
     
     wordcomp = []
 
