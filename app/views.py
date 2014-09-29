@@ -29,6 +29,10 @@ def search():
 @app.route('/author.html')
 def author():
     return render_template('author.html')
+    
+@app.route('/slides.html')
+def slides():
+    return render_template('slides.html')
 
 @app.route("/sentences", methods=['GET'])
 def get_sentences():
