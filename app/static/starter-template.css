@@ -1,5 +1,5 @@
 body {
-  background: url('../static/images/books3.jpg') no-repeat center center fixed;
+  background: url(../static/images/books3.jpg) no-repeat center center fixed;
   padding-top: 50px;
 }
 .starter-template {
