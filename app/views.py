@@ -43,7 +43,7 @@ def get_sentences():
     
     data = {}
     data[0] = 'Occurrence of <b>' + wordname + '</b> in reviews:'
-    data[0] += '<br> <b>"' + wordname + '"</b> occurs in ?? out of ' + str(nreviews) + ' reviews contraining <b>"' + kwordname + '"</b><br>'
+    data[0] += '<br> <b>"' + wordname + '"</b> occurs in 21 out of ' + str(nreviews) + ' reviews contraining <b>"' + kwordname + '"</b><br>'
     if scorediff > 0:
         data[0] += '<br> Adding <b> ' + wordname +' </b> will increase the average star rating by <b>' + str("%.1f" % scorediff) + '</b> <br>'
     else:
