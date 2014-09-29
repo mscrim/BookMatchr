@@ -108,8 +108,41 @@
       <br>
       <p> 
       <h3> Top 10 recommended words to NOT add:</h3>
-      {% for word in top5_neg %} 
-      <button type="button" class="btn btn-lg btn-danger">{{ word[0] }}</button>
+      
+      {% for word in top5_neg_wds %} 
+      <!-- <button type="button" class="btn btn-lg btn-success">{{ word[0] }}</button> -->
+      <!-- Button for sentences -->
+		<div class="btn-group progress-nomargin">
+			<button class="btn btn-lg btn-danger" 
+			        data-toggle="modal" 
+			        data-target="#myModal" 
+			        id="word" 
+			        value="{{word[0]}}" 
+			        onclick="getsentences('{{word[0]}}','{{ keyword }}','{{ word[4] }}', '{{ revstats[4] }}' )">
+			<b>{{ word[0] }}</b>
+			</button>
+		</div>
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="popup_header" aria-hidden="true"> <!-- Modal -->
+		    <div class="modal-dialog">
+			    <div class="modal-content">
+				    <div class="modal-header">
+					    <button type="button" 
+					            class="close" 
+					            data-dismiss="modal"><span 
+					            aria-hidden="true">&times;</span><span 
+					            class="sr-only">Close</span>
+					    </button>
+						<h4 class="modal-title" id="popup_header"></h4>
+					</div>
+					<div class="modal-body" id="sentence_popup">loading...
+					</div>
+					<div class="modal-footer">
+					    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
       {% endfor %}
       </p>
         

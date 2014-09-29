@@ -18,11 +18,11 @@ def search():
     if " " in keyword:
         return render_template('search3.html', keyword=keyword)
     else:
-        keywordinreviews, top5books, top5_pos_wds, top5_neg, revstats, keywd_w_time = appfunc.wordfreq2(keyword)
+        keywordinreviews, top5books, top5_pos_wds, top5_neg_wds, revstats, keywd_w_time = appfunc.wordfreq3(keyword)
     
     if keywordinreviews:
         return render_template('search.html', keyword=keyword, top5books=top5books, 
-                            top5_pos_wds=top5_pos_wds,top5_neg=top5_neg,revstats=revstats,keywd_w_time=keywd_w_time)
+                            top5_pos_wds=top5_pos_wds,top5_neg_wds=top5_neg_wds,revstats=revstats,keywd_w_time=keywd_w_time)
     else: 
         return render_template('search2.html', keyword=keyword)
 
