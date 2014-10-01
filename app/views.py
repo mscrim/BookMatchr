@@ -53,9 +53,6 @@ def get_sentences():
         data[0] += 'Adding <b> ' + wordname +' </b> decreases the average star rating from <b>' + str("%.1f" % wordresults[1]) + '</b> to <b>' + str("%.1f" % wordresults[0]) + '</b><br>'
     data[0] += '<br><b> Top books containing both "' + kwordname + '" and "' + wordname + '": </b><br>'
     
-    for key in sorted(dict.keys()):
-    print key, dict[key]
-    
     for item in sorted(books.items(), key=lambda x: x[1], reverse=True):
         if item[1] == 1: data[0] += '<li type="disc">' + item[0] + ' (' + str(item[1]) + ' occurrence of "' + wordname + '"). </li>'
         else: data[0] += '<li type="disc">' +  item[0] + ' (' + str(item[1]) + ' occurrences of "' + wordname + '"). </li>'
