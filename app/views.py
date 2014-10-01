@@ -30,7 +30,7 @@ def search():
 def author():
     return render_template('author.html')
     
-@app.route('/slides.html')
+@app.route('/slides')
 def slides():
     return render_template('slidestack.html')
 
@@ -38,20 +38,25 @@ def slides():
 def get_sentences():
     wordname = request.args.get('wordname', type=str)
     kwordname = request.args.get('kwordname', type=str)
-    #scorediff = request.args.get('scorediff', type=float)
     nreviews = request.args.get('nreviews', type=int)
     
-    wordresults = extrawordstats(wordname, kwordname)
+    wordresults, books = appfunc.extrawordstats(wordname, kwordname)
     scorediff = wordresults[0]-wordresults[1]
     
     data = {}
-    data[0] = 'Occurrence of <b>' + wordname + '</b> in reviews:'
-    data[0] += '<br> <b>"' + wordname + '"</b> occurs in ' + str(wordresults[3]) + ' out of ' + str(wordresults[2]) + ' positive reviews contraining <b>"' + kwordname + '"</b><br>'
-    data[0] += 'and in ' + str(wordresults[5]) + ' out of ' + str(wordresults[4]) + ' negative reviews contraining <b>"' + kwordname + '".</b><br>'
+    data[0] = '<b> Occurrence of "' + wordname + '" in reviews:</b> <br>'
+    data[0] += '<li type="disc"> Occurs in ' + str(wordresults[3]) + ' out of ' + str(wordresults[2]) + ' positive reviews containing <b>' + kwordname + '.</b></li>'
+    data[0] += '<li type="disc"> Occurs in ' + str(wordresults[5]) + ' out of ' + str(wordresults[4]) + ' negative reviews containing <b>' + kwordname + '.</b></li><br>'
     if scorediff > 0:
-        data[0] += '<br> Adding <b> ' + wordname +' </b> will increase the average star rating from <b>' + str("%.1f" % wordresults[1]) + '</b> to <b>' + str("%.1f" % wordresults[0]) + '</b><br>'
+        data[0] += 'Adding <b> ' + wordname +' </b> increases the average star rating from <b>' + str("%.1f" % wordresults[1]) + '</b> to <b>' + str("%.1f" % wordresults[0]) + '</b><br>'
     else:
-        data[0] += '<br> Adding <b> ' + wordname +' </b> will decrease the average star rating from <b>' + str("%.1f" % wordresults[1]) + '</b> to <b>' + str("%.1f" % wordresults[0]) + '</b><br>'
+        data[0] += 'Adding <b> ' + wordname +' </b> decreases the average star rating from <b>' + str("%.1f" % wordresults[1]) + '</b> to <b>' + str("%.1f" % wordresults[0]) + '</b><br>'
+    data[0] += '<br><b> Top books containing both "' + kwordname + '" and "' + wordname + '": </b><br>'
+    
+    for item in sorted(books.items(), key=lambda x: x[1]):
+        if item[1] == 1: data[0] += '<li type="disc">' + item[0] + ' (' + str(item[1]) + ' occurrence of "' + wordname + '"). </li><br>'
+        else: data[0] += '<li type="disc">' +  item[0] + ' (' + str(item[1]) + ' occurrences of "' + wordname + '"). </li><br>'
+ 
     return jsonify(data)
 
 '''

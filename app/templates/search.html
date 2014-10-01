@@ -153,12 +153,6 @@
             <h3> Trend in "{{ keyword }}" over time:</h3>
             <p>(Number of occurrences of "{{ keyword }}" in Amazon book reviews over time)<br></p>
             <div id="chart_div" style="width: 450px; height: 300px;"></div>
-            
-            <div id="keywordtrendbox">
-            
-                
-                
-            </div>
                 
              </div>
             
@@ -176,13 +170,13 @@
       </div>
       
       <table class="table table-hover">
-    <tr><th>Book title</th><th>Occurrences of keyword in reviews</th><th>Average score</th><th>Info</th><th>Amazon Link</th></tr>
+    <tr><th>Book title</th><th>Occurrences of keyword in reviews</th><th>Average score</th><th>More information</th></tr>
     {% for book in top5books %}
     <tr>
     <td>{{ book[0] }}</td>
     <td>{{ book[1]}}</td>
     <td><span class="stars">{{ book[2] }}</span>({{ book[3] }} {% if book[3] > 1 %}reviews{% else %}review{% endif %})</td>
-    <td><button type="button" class="btn btn-xs btn-info" data-target="#myModal" onclick="hi">Info</button></td>
+    <!-- <td><button type="button" class="btn btn-xs btn-info" data-target="#myModal" onclick="hi">Info</button></td> -->
     <td><div class="btn-group">
                 <a href="http://www.amazon.com/dp/{{book[4]}}/" target="_blank" class="btn btn-xs btn-warning">
                     Amazon
@@ -302,7 +296,6 @@
 			function success(text) {
 				var text_space = document.getElementById('sentence_popup');
 				text_space.innerHTML = text[0]; 
-				<div id="chart_div" style="width: 450px; height: 300px;"></div>
 				var text_heading = document.getElementById('popup_header');
 				text_heading.innerHTML = 'Benefits of including ' + '"<b>' + wname + '"</b> with '+ '"<b>' + kwname + '"</b>';
 			};  

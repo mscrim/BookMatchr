@@ -48,17 +48,8 @@ def wordfreq3(keyword):
     start = tm.time()
     
     keyword = keyword.lower()
-    #keyword_pl = keyword + 's'
-    
-    
-    #if keyword in ['dragon']:
-    #    rows, nounlist, time_max, time_min = getdata_and_nouns_keyword("title, reviewtext, score, productID, reviewtime",keyword)
-    #else:
-    #    rows, nounlist, time_max, time_min = getdata_and_nouns("title, reviewtext, score, productID, reviewtime")
-    
-    time1 = tm.time()
+
     rows, nouns_idf, time_max, time_min = getdata_and_nouns_idf("title, reviewnouns, score, productID, reviewtime, reviewlength")
-    #print "Read in SQL in",tm.time()-time1,"seconds"
     
     time_max = (time_max[0])[0]
     time_min = (time_min[0])[0]
@@ -249,6 +240,9 @@ def wordfreq3(keyword):
     return keywordinreviews, top5books, top5_pos_wds, top5_neg_wds, revstats, keywd_w_time
     
 def extrawordstats(word, keyword):
+
+    keyword = keyword.lower()
+    
     rows, nouns_idf, time_max, time_min = getdata_and_nouns_idf("title, reviewnouns, score, productID, reviewtime, reviewlength")
     #print "Read in SQL in",tm.time()-time1,"seconds"
     
@@ -266,6 +260,8 @@ def extrawordstats(word, keyword):
     nneg_all = 0.
     nneg_w = 0.
     
+    books = {}
+    
     for row in rows:
         lowers = row[1].lower()    
         if keyword in lowers:
@@ -279,14 +275,20 @@ def extrawordstats(word, keyword):
                 nw += 1.
                 if score in [1,2,3]: nneg_w += 1.
                 else: npos_w += 1.
+                if row[0] in books:
+                    books[row[0]] = books[row[0]] + 1
+                else:
+                    books[row[0]] = 1
             else:
                 scorewout += score
                 nwout += 1.
+            
+            
     
     scorew = scorew / nw
     scorewout = scorewout / nwout
     
     result = [scorew, scorewout, npos_all, npos_w, nneg_all, nneg_w]
     
-    return result
+    return result, books
     
