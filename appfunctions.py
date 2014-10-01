@@ -88,10 +88,10 @@ def getdata_and_nouns_idf(items):
     conn = mdb.connect('localhost', 'root', '', 'Amazon') #host, user, password, #database
     cur = conn.cursor()
     
-    limit = "10000"
+    #limit = "10000"
     
     # Select all review text
-    sql = "SELECT " + items + " FROM Reviews_nounlists WHERE reviewtime <> -1 LIMIT " + limit
+    sql = "SELECT " + items + " FROM Reviews_nounlists WHERE reviewtime <> -1" # LIMIT " + limit
     cur.execute(sql)
     rows = cur.fetchall()
     
@@ -99,10 +99,10 @@ def getdata_and_nouns_idf(items):
     cur.execute(sql)
     nouns_idf = cur.fetchall()
     
-    cur.execute('SELECT MAX(reviewtime) AS time_max FROM Reviews_nounlists LIMIT ' + limit)
+    cur.execute('SELECT MAX(reviewtime) AS time_max FROM Reviews_nounlists') # LIMIT ' + limit)
     time_max = cur.fetchall()
     
-    cur.execute('SELECT MIN(reviewtime) AS time_min FROM Reviews_nounlists WHERE reviewtime <> -1 LIMIT ' + limit)
+    cur.execute('SELECT MIN(reviewtime) AS time_min FROM Reviews_nounlists WHERE reviewtime <> -1') # LIMIT ' + limit)
     time_min = cur.fetchall()
     
     cur.close()
@@ -918,7 +918,47 @@ def wordfreq(keyword):
 #def writedict():
 
 
+def extrawordstats(word, keyword):
+    rows, nouns_idf, time_max, time_min = getdata_and_nouns_idf("title, reviewnouns, score, productID, reviewtime, reviewlength")
+    #print "Read in SQL in",tm.time()-time1,"seconds"
+    
+    #time_max = (time_max[0])[0]
+    #time_min = (time_min[0])[0]
 
+    #nouns_idf = dict(nouns_idf)
+    
+    scorew = 0.
+    nw = 0.
+    scorewout = 0.
+    nwout = 0.
+    npos_all = 0.
+    npos_w = 0.
+    nneg_all = 0.
+    nneg_w = 0.
+    
+    for row in rows:
+        lowers = row[1].lower()    
+        if keyword in lowers:
+        
+            score = row[2]
+            if score in [1,2,3]: nneg_all += 1.
+            else: npos_all += 1.
+            
+            if word in lowers:
+                scorew += score
+                nw += 1.
+                if score in [1,2,3]: nneg_w += 1.
+                else: npos_w += 1.
+            else:
+                scorewout += score
+                nwout += 1.
+    
+    scorew = scorew / nw
+    scorewout = scorewout / nwout
+    
+    result = [scorew, scorewout, npos_all, npos_w, nneg_all, nneg_w]
+    
+    return result
     
 def topbook(keyword):
     conn = mdb.connect('localhost', 'root', '', 'Amazon') #host, user, password, #database

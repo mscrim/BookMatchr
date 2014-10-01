@@ -38,16 +38,20 @@ def slides():
 def get_sentences():
     wordname = request.args.get('wordname', type=str)
     kwordname = request.args.get('kwordname', type=str)
-    scorediff = request.args.get('scorediff', type=float)
+    #scorediff = request.args.get('scorediff', type=float)
     nreviews = request.args.get('nreviews', type=int)
+    
+    wordresults = extrawordstats(wordname, kwordname)
+    scorediff = wordresults[0]-wordresults[1]
     
     data = {}
     data[0] = 'Occurrence of <b>' + wordname + '</b> in reviews:'
-    data[0] += '<br> <b>"' + wordname + '"</b> occurs in 21 out of ' + str(nreviews) + ' reviews contraining <b>"' + kwordname + '"</b><br>'
+    data[0] += '<br> <b>"' + wordname + '"</b> occurs in ' + str(wordresults[3]) + ' out of ' + str(wordresults[2]) + ' positive reviews contraining <b>"' + kwordname + '"</b><br>'
+    data[0] += 'and in ' + str(wordresults[5]) + ' out of ' + str(wordresults[4]) + ' negative reviews contraining <b>"' + kwordname + '".</b><br>'
     if scorediff > 0:
-        data[0] += '<br> Adding <b> ' + wordname +' </b> will increase the average star rating by <b>' + str("%.1f" % scorediff) + '</b> <br>'
+        data[0] += '<br> Adding <b> ' + wordname +' </b> will increase the average star rating from <b>' + str("%.1f" % wordresults[1]) + '</b> to <b>' + str("%.1f" % wordresults[0]) + '</b><br>'
     else:
-        data[0] += '<br> Adding <b> ' + wordname +' </b> will decrease the average star rating by <b>' + str("%.1f" % scorediff) + '</b> <br>'
+        data[0] += '<br> Adding <b> ' + wordname +' </b> will decrease the average star rating from <b>' + str("%.1f" % wordresults[1]) + '</b> to <b>' + str("%.1f" % wordresults[0]) + '</b><br>'
     return jsonify(data)
 
 '''
