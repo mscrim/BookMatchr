@@ -1,10 +1,10 @@
+body {
+  background: url(../static/images/books3.jpg) no-repeat center center fixed;
+  padding-top: 50px;
+}
 .starter-template {
   padding: 40px 15px;
   text-align: center;
-}
-.body {
-  background: url(../static/images/books3.jpg) no-repeat center center fixed;
-  padding-top: 50px;
 }
 .well {
    background-color: rgba(245, 245, 245, 0.8);
