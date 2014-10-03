@@ -157,7 +157,7 @@ def wordfreq3(keyword):
     fdist = nltk.FreqDist(alltext)
     
     for w in fdistpos.keys():
-        if w == 'etc' print 'w == etc'
+        if w == 'etc': print 'w == etc'
     sys.exit(1)
     
     tfidf_pos = [(w, float(fdistpos[w])/float(fdistpos.N())*nouns_idf[w]) for w in fdistpos.keys() if len(w) > 1 and fdistpos[w] > 1]
@@ -242,6 +242,9 @@ def wordfreq3(keyword):
         keywd_w_time.append([dtime[i],nrev_wk_time[i]])
 
     return keywordinreviews, top5books, top5_pos_wds, top5_neg_wds, revstats, keywd_w_time
+    
+keywordinreviews, top5books, top5_pos_wds, top5_neg_wds, revstats, keywd_w_time = wordfreq3("dragon")
+print "done!"
     
 def extrawordstats(word, keyword):
 
