@@ -24,18 +24,18 @@ def getdata_and_nouns_idf(items):
     #limit = "10000"
     
     # Select all review text
-    sql = "SELECT " + items + " FROM Reviews_nounlists2 WHERE reviewtime <> -1" # LIMIT " + limit
+    sql = "SELECT " + items + " FROM Reviews_nounlists WHERE reviewtime <> -1" # LIMIT " + limit
     cur.execute(sql)
     rows = cur.fetchall()
     
-    sql = "SELECT Noun, IDF FROM NounlistIDF2"
+    sql = "SELECT Noun, IDF FROM NounlistIDF"
     cur.execute(sql)
     nouns_idf = cur.fetchall()
     
-    cur.execute('SELECT MAX(reviewtime) AS time_max FROM Reviews_nounlists2') # LIMIT ' + limit)
+    cur.execute('SELECT MAX(reviewtime) AS time_max FROM Reviews_nounlists') # LIMIT ' + limit)
     time_max = cur.fetchall()
     
-    cur.execute('SELECT MIN(reviewtime) AS time_min FROM Reviews_nounlists2 WHERE reviewtime <> -1') # LIMIT ' + limit)
+    cur.execute('SELECT MIN(reviewtime) AS time_min FROM Reviews_nounlists WHERE reviewtime <> -1') # LIMIT ' + limit)
     time_min = cur.fetchall()
     
     cur.close()
