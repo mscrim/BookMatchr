@@ -157,7 +157,7 @@ def wordfreq3(keyword):
     fdist = nltk.FreqDist(alltext)
     
     for w in fdistpos.keys():
-        if w[0] == 'e': print w, nouns_idf[w]
+        if w[0] == 'e': print w#, nouns_idf[w]
         #if w == 'etc': print 'w == etc'
     sys.exit(1)
     
