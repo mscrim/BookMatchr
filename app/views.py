@@ -11,14 +11,14 @@ def index():
     
 	return render_template("index.html")
 
-@app.route('/search.html')
+@app.route('/search')
 def search():
     keyword = request.args.get("query",None)
     #topwords, scorediff = appfunc.topbooks(keyword)
     if " " in keyword:
         return render_template('search3.html', keyword=keyword)
     else:
-        keywordinreviews, top5books, top5_pos_wds, top5_neg_wds, revstats, keywd_w_time = appfunc.wordfreq3(keyword)
+        keywordinreviews, top5books, top5_pos_wds, top5_neg_wds, revstats, keywd_w_time = appfunc.wordfreq(keyword)
     
     if keywordinreviews:
         return render_template('search.html', keyword=keyword, top5books=top5books, 
@@ -26,7 +26,7 @@ def search():
     else: 
         return render_template('search2.html', keyword=keyword)
 
-@app.route('/author.html')
+@app.route('/author')
 def author():
     return render_template('author.html')
     

@@ -1,5 +1,4 @@
 import MySQLdb as mdb
-#import pandas as pd
 import numpy as np
 import nltk
 from collections import Counter
@@ -9,10 +8,6 @@ import sys
 from sets import Set
 import time as tm
 import datetime as dt
-#import matplotlib.pyplot as plt
-#from matplotlib import rcParams
-#rcParams.update({'figure.autolayout': True})
-
 
 def collect(l, index):
     return map(itemgetter(index), l)
@@ -21,21 +16,19 @@ def getdata_and_nouns_idf(items):
     conn = mdb.connect('localhost', 'root', '', 'Amazon') #host, user, password, #database
     cur = conn.cursor()
     
-    #limit = "10000"
-    
     # Select all review text
-    sql = "SELECT " + items + " FROM Reviews_nounlists WHERE reviewtime <> -1" # LIMIT " + limit
+    sql = "SELECT " + items + " FROM Reviews_nounlists_rand WHERE reviewtime <> -1" # LIMIT 10000"
     cur.execute(sql)
     rows = cur.fetchall()
     
-    sql = "SELECT Noun, IDF FROM NounlistIDF"
+    sql = "SELECT Noun, IDF FROM NounlistIDF_rand"
     cur.execute(sql)
     nouns_idf = cur.fetchall()
     
-    cur.execute('SELECT MAX(reviewtime) AS time_max FROM Reviews_nounlists') # LIMIT ' + limit)
+    cur.execute('SELECT MAX(reviewtime) AS time_max FROM Reviews_nounlists_rand') # LIMIT 10000')
     time_max = cur.fetchall()
     
-    cur.execute('SELECT MIN(reviewtime) AS time_min FROM Reviews_nounlists WHERE reviewtime <> -1') # LIMIT ' + limit)
+    cur.execute('SELECT MIN(reviewtime) AS time_min FROM Reviews_nounlists_rand WHERE reviewtime <> -1') # LIMIT 10000')
     time_min = cur.fetchall()
     
     cur.close()
@@ -43,7 +36,7 @@ def getdata_and_nouns_idf(items):
     
     return rows, nouns_idf, time_max, time_min
 
-def wordfreq3(keyword):
+def wordfreq(keyword):
     #--------------------- Setup ----------------------
     start = tm.time()
     
@@ -156,14 +149,19 @@ def wordfreq3(keyword):
     alltext = nltk.word_tokenize(alltext)
     fdist = nltk.FreqDist(alltext)
     
-    for w in fdistpos.keys():
-        if w[0] == 'e': print w#, nouns_idf[w]
-        #if w == 'etc': print 'w == etc'
-    sys.exit(1)
+    #if 'etc' in nouns_idf: print 'yes'
+    #else: print 'no'
     
-    tfidf_pos = [(w, float(fdistpos[w])/float(fdistpos.N())*nouns_idf[w]) for w in fdistpos.keys() if len(w) > 1 and fdistpos[w] > 1]
-    tfidf_neg = [(w, float(fdistneg[w])/float(fdistneg.N())*nouns_idf[w]) for w in fdistneg.keys() if len(w) > 1 and fdistneg[w] > 1]
-    tfidf_all = [(w, float(fdist[w])/float(fdist.N())*nouns_idf[w]) for w in fdist.keys() if len(w) > 1 and fdist[w] > 1]
+    #for w in fdistpos.keys():
+    #    if w[0] == 'e': print w, nouns_idf[w]
+    #    sys.stdout.flush()
+    #    #if w == 'etc': print 'w == etc'
+    #sys.exit(1)
+    
+    avoidwords = ['it','etc','etal']
+    tfidf_pos = [(w, float(fdistpos[w])/float(fdistpos.N())*nouns_idf[w]) for w in fdistpos.keys() if len(w) > 1 and fdistpos[w] > 1 and w not in avoidwords]
+    tfidf_neg = [(w, float(fdistneg[w])/float(fdistneg.N())*nouns_idf[w]) for w in fdistneg.keys() if len(w) > 1 and fdistneg[w] > 1 and w not in avoidwords]
+    tfidf_all = [(w, float(fdist[w])/float(fdist.N())*nouns_idf[w]) for w in fdist.keys() if len(w) > 1 and fdist[w] > 1 and w not in avoidwords]
     
     #print tfidf_pos
     
@@ -244,8 +242,8 @@ def wordfreq3(keyword):
 
     return keywordinreviews, top5books, top5_pos_wds, top5_neg_wds, revstats, keywd_w_time
     
-keywordinreviews, top5books, top5_pos_wds, top5_neg_wds, revstats, keywd_w_time = wordfreq3("dragon")
-print "done!"
+#keywordinreviews, top5books, top5_pos_wds, top5_neg_wds, revstats, keywd_w_time = wordfreq3("dragon")
+#print "done!"
     
 def extrawordstats(word, keyword):
 
