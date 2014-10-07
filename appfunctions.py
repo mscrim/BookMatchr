@@ -158,7 +158,7 @@ def wordfreq(keyword):
     #    #if w == 'etc': print 'w == etc'
     #sys.exit(1)
     
-    avoidwords = ['it','etc','etal','series']
+    avoidwords = ['it','etc','etal','series','jo']
     tfidf_pos = [(w, float(fdistpos[w])/float(fdistpos.N())*nouns_idf[w]) for w in fdistpos.keys() if len(w) > 1 and fdistpos[w] > 1 and w not in avoidwords]
     tfidf_neg = [(w, float(fdistneg[w])/float(fdistneg.N())*nouns_idf[w]) for w in fdistneg.keys() if len(w) > 1 and fdistneg[w] > 1 and w not in avoidwords]
     tfidf_all = [(w, float(fdist[w])/float(fdist.N())*nouns_idf[w]) for w in fdist.keys() if len(w) > 1 and fdist[w] > 1 and w not in avoidwords]
